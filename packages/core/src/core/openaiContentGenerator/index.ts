@@ -15,6 +15,8 @@ import {
   DeepSeekOpenAICompatibleProvider,
   ModelScopeOpenAICompatibleProvider,
   OpenRouterOpenAICompatibleProvider,
+  OllamaProvider,
+  VllmProvider,
   type OpenAICompatibleProvider,
   DefaultOpenAICompatibleProvider,
 } from './provider/index.js';
@@ -27,6 +29,8 @@ export {
   DashScopeOpenAICompatibleProvider,
   DeepSeekOpenAICompatibleProvider,
   OpenRouterOpenAICompatibleProvider,
+  OllamaProvider,
+  VllmProvider,
 } from './provider/index.js';
 
 export { OpenAIContentConverter } from './converter.js';
@@ -48,6 +52,10 @@ export function createOpenAIContentGenerator(
 
 /**
  * Determine the appropriate provider based on configuration
+ * Priority order:
+ * 1. Local providers (Ollama, vLLM)
+ * 2. Cloud providers (DashScope, DeepSeek, OpenRouter, ModelScope)
+ * 3. Default OpenAI-compatible provider
  */
 export function determineProvider(
   contentGeneratorConfig: ContentGeneratorConfig,
@@ -55,6 +63,15 @@ export function determineProvider(
 ): OpenAICompatibleProvider {
   const config =
     contentGeneratorConfig || cliConfig.getContentGeneratorConfig();
+
+  // Check for local providers first (highest priority)
+  if (OllamaProvider.isOllamaProvider(config)) {
+    return new OllamaProvider(contentGeneratorConfig, cliConfig);
+  }
+
+  if (VllmProvider.isVllmProvider(config)) {
+    return new VllmProvider(contentGeneratorConfig, cliConfig);
+  }
 
   // Check for DashScope provider
   if (DashScopeOpenAICompatibleProvider.isDashScopeProvider(config)) {

@@ -43,6 +43,7 @@ export enum AuthType {
   USE_GEMINI = 'gemini',
   USE_VERTEX_AI = 'vertex-ai',
   USE_ANTHROPIC = 'anthropic',
+  LOCAL = 'local', // For local model inference (Ollama, vLLM, etc.)
 }
 
 export type ContentGeneratorConfig = {
@@ -75,6 +76,9 @@ export type ContentGeneratorConfig = {
   userAgent?: string;
   // Schema compliance mode for tool definitions
   schemaCompliance?: 'auto' | 'openapi_30';
+  // Local model configuration
+  localProvider?: 'ollama' | 'vllm' | 'custom';
+  offlineMode?: boolean; // Prevent fallback to cloud providers
 };
 
 export function createContentGeneratorConfig(
@@ -96,6 +100,36 @@ export function createContentGeneratorConfig(
       model: DEFAULT_QWEN_MODEL,
       apiKey: 'QWEN_OAUTH_DYNAMIC_TOKEN',
     } as ContentGeneratorConfig;
+  }
+
+  if (authType === AuthType.LOCAL) {
+    // For local models (Ollama, vLLM, etc.)
+    newContentGeneratorConfig = {
+      ...newContentGeneratorConfig,
+      apiKey: newContentGeneratorConfig.apiKey || 'local', // API key not required for local
+      baseUrl:
+        newContentGeneratorConfig.baseUrl ||
+        process.env['LOCAL_MODEL_BASE_URL'] ||
+        process.env['OLLAMA_BASE_URL'] ||
+        'http://localhost:11434/v1',
+      model:
+        newContentGeneratorConfig.model ||
+        process.env['LOCAL_MODEL'] ||
+        process.env['OLLAMA_MODEL'] ||
+        'qwen3-coder:14b',
+      localProvider:
+        (newContentGeneratorConfig.localProvider as
+          | 'ollama'
+          | 'vllm'
+          | 'custom') ||
+        (process.env['LOCAL_PROVIDER'] as 'ollama' | 'vllm' | 'custom') ||
+        'ollama',
+      offlineMode:
+        newContentGeneratorConfig.offlineMode ??
+        process.env['OFFLINE_MODE'] === 'true',
+    };
+
+    return newContentGeneratorConfig as ContentGeneratorConfig;
   }
 
   if (authType === AuthType.USE_OPENAI) {
@@ -180,6 +214,16 @@ export async function createContentGenerator(
   gcConfig: Config,
   isInitialAuth?: boolean,
 ): Promise<ContentGenerator> {
+  if (config.authType === AuthType.LOCAL) {
+    // LOCAL uses the OpenAI-compatible API pattern with local providers
+    const { createOpenAIContentGenerator } = await import(
+      './openaiContentGenerator/index.js'
+    );
+
+    const generator = createOpenAIContentGenerator(config, gcConfig);
+    return new LoggingContentGenerator(generator, gcConfig);
+  }
+
   if (config.authType === AuthType.USE_OPENAI) {
     if (!config.apiKey) {
       throw new Error('OPENAI_API_KEY environment variable not found.');
