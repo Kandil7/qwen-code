@@ -1,0 +1,95 @@
+{
+  "name": "opencode-quality-suite",
+  "version": "2.0.0",
+  "description": "Quality assurance scripts for Qwen Code / Opencode projects",
+  
+  "scripts": {
+    "check": "node .qwen/scripts/type-check.js",
+    "lint:fix": "node .qwen/scripts/import-sort.js --write",
+    "audit": "node .qwen/scripts/dependency-audit.js",
+    "dead-code": "node .qwen/scripts/dead-code.js",
+    "pre-commit": "node .qwen/scripts/pre-commit.js",
+    "verify": "node .qwen/scripts/pre-commit.js",
+    "verify:fast": "node .qwen/scripts/security-scan.js && node .qwen/scripts/find-debug-statements.js",
+    "coverage:trend": "node .qwen/scripts/verify-coverage.js --trend",
+    "coverage:html": "node .qwen/scripts/verify-coverage.js --html",
+    "complexity": "node .qwen/scripts/check-complexity.js",
+    "security:fix": "node .qwen/scripts/security-scan.js --auto-fix",
+    "debug:fix": "node .qwen/scripts/find-debug-statements.js --auto-fix",
+    "review": "node .qwen/scripts/review-summary.js",
+    "review:pr": "node .qwen/scripts/review-summary.js --pr"
+  },
+  
+  "coverage": {
+    "threshold": 80,
+    "failOnTrend": true,
+    "trendHistory": 5,
+    "trendDbPath": ".qwen/data/coverage-trends.json"
+  },
+  
+  "security": {
+    "patterns": "extended",
+    "autoRemediate": false,
+    "severityThreshold": "HIGH",
+    "excludeDirs": ["node_modules", ".git", "dist", "build", "coverage", "vendor", ".qwen"],
+    "excludeFiles": [".env.example", ".env.template", "example.env", "secrets.json"]
+  },
+  
+  "complexity": {
+    "maxFunctionLines": 50,
+    "maxFileLines": 800,
+    "maxNesting": 4,
+    "maxCyclomaticComplexity": 10,
+    "maxClassLines": 300,
+    "languages": ["js", "ts", "py", "go", "rs"]
+  },
+  
+  "preCommit": {
+    "enabled": true,
+    "checks": ["security", "debugStatements", "typeCheck", "coverage", "complexity", "dependencyAudit", "importSort"],
+    "parallel": true,
+    "failFast": false,
+    "skipEnvironmentVariables": [
+      "SKIP_PRE_COMMIT",
+      "SKIP_SECURITY",
+      "SKIP_DEBUG",
+      "SKIP_TYPES",
+      "SKIP_COVERAGE",
+      "SKIP_COMPLEXITY",
+      "SKIP_AUDIT"
+    ]
+  },
+  
+  "debugStatements": {
+    "excludeDirs": ["node_modules", ".git", "dist", "build", "coverage", ".qwen", "vendor"],
+    "excludeFiles": [".test.js", ".spec.js", ".test.ts", ".spec.ts", "test-*.js"],
+    "autoFix": false
+  },
+  
+  "importSort": {
+    "python": {
+      "enabled": true,
+      "config": ".isort.cfg"
+    },
+    "typescript": {
+      "enabled": true
+    },
+    "prettier": {
+      "enabled": true,
+      "config": ".prettierrc"
+    }
+  },
+  
+  "dependencyAudit": {
+    "vulnerableOnly": false,
+    "autoFix": false
+  },
+  
+  "qualityGates": {
+    "minCoverage": 80,
+    "maxComplexity": 10,
+    "maxNesting": 4,
+    "allowDebugStatements": false,
+    "allowSecurityIssues": false
+  }
+}

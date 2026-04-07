@@ -1,0 +1,125 @@
+{
+  "_comment": "Agent Output Validation Baselines",
+  "_purpose": "Define expected outputs for common agent operations to verify behavioral correctness",
+  "_version": "1.0.0",
+
+  "baselines": [
+    {
+      "id": "agent_file_structure",
+      "description": "Every agent file must have required sections",
+      "type": "structure",
+      "target": "all_agents",
+      "required_sections": [
+        "## Your Role",
+        "## Commands You Can Use",
+        "## Project Knowledge",
+        "## Boundaries",
+        "## Core Responsibilities",
+        "## Success Metrics"
+      ],
+      "required_frontmatter_fields": [
+        "name",
+        "description",
+        "mode",
+        "tools"
+      ],
+      "min_lines": 50,
+      "max_lines": 500
+    },
+    {
+      "id": "command_file_structure",
+      "description": "Every command file must have valid frontmatter and body",
+      "type": "structure",
+      "target": "all_commands",
+      "required_sections": [
+        "## Usage",
+        "## What Happens"
+      ],
+      "required_frontmatter_fields": [
+        "description"
+      ],
+      "min_lines": 30
+    },
+    {
+      "id": "skill_file_structure",
+      "description": "Every skill file must be non-empty and well-formed",
+      "type": "structure",
+      "target": "all_skills",
+      "min_lines": 10
+    },
+    {
+      "id": "agent_boundary_completeness",
+      "description": "Agent boundaries must have all three tiers (Always/Ask/Never)",
+      "type": "content",
+      "target": "all_agents",
+      "required_patterns": [
+        "Always Do",
+        "Ask First",
+        "Never Do"
+      ]
+    },
+    {
+      "id": "agent_tool_permissions",
+      "description": "All agents must have explicit tool permissions defined",
+      "type": "content",
+      "target": "all_agents",
+      "required_patterns": [
+        "tools:"
+      ]
+    },
+    {
+      "id": "policy_json_validity",
+      "description": "Policy file must be valid JSON with required sections",
+      "type": "structure",
+      "target": "policy.json",
+      "required_keys": [
+        "tool_policies",
+        "budget_policies",
+        "file_policies",
+        "environment_policies"
+      ]
+    },
+    {
+      "id": "settings_json_validity",
+      "description": "Settings file must be valid JSON with required sections",
+      "type": "structure",
+      "target": "settings.json",
+      "required_keys": [
+        "mcpServers",
+        "hooks",
+        "agents"
+      ]
+    },
+    {
+      "id": "hook_scripts_syntax",
+      "description": "All hook scripts must have valid JavaScript syntax",
+      "type": "syntax",
+      "target": "all_hook_scripts"
+    },
+    {
+      "id": "executable_scripts_runnable",
+      "description": "All scripts must execute without syntax errors",
+      "type": "execution",
+      "target": "all_scripts"
+    },
+    {
+      "id": "json_files_valid",
+      "description": "All JSON files must be valid and parseable",
+      "type": "syntax",
+      "target": "all_json_files"
+    },
+    {
+      "id": "python_scripts_syntax",
+      "description": "All Python scripts must have valid syntax",
+      "type": "syntax",
+      "target": "all_python_scripts"
+    },
+    {
+      "id": "markdown_links_valid",
+      "description": "Internal markdown links should reference existing files",
+      "type": "content",
+      "target": "all_markdown",
+      "check_internal_links": true
+    }
+  ]
+}

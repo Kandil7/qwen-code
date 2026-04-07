@@ -1,0 +1,113 @@
+{
+  "name": "firecrawl",
+  "version": "1.0.0",
+  "description": "AI-powered web scraping skill using Firecrawl framework with natural language extraction, MCP integration, and LLM-ready output",
+  "entry_point": "firecrawl.py",
+  "commands": [
+    {
+      "name": "init",
+      "description": "Create new Firecrawl project with client setup, schema templates, and test fixtures",
+      "usage": "python firecrawl.py init <project_name>",
+      "examples": [
+        "python firecrawl.py init research-project",
+        "python firecrawl.py init product-monitoring"
+      ]
+    },
+    {
+      "name": "scrape",
+      "description": "Extract content from a single URL with clean markdown/JSON output",
+      "usage": "python firecrawl.py scrape <url> [--formats markdown,json,html,screenshot] [--output <file>] [--schema <schema_file>]",
+      "examples": [
+        "python firecrawl.py scrape https://example.com",
+        "python firecrawl.py scrape https://shop.example.com --formats markdown --output page.md",
+        "python firecrawl.py scrape https://shop.example.com/product --schema schemas/product.py"
+      ]
+    },
+    {
+      "name": "crawl",
+      "description": "Recursively crawl a website with configurable depth and limits",
+      "usage": "python firecrawl.py crawl <url> [--limit N] [--output <file>]",
+      "examples": [
+        "python firecrawl.py crawl https://docs.example.com --limit 100",
+        "python firecrawl.py crawl https://blog.example.com --limit 50 --output docs.json"
+      ]
+    },
+    {
+      "name": "agent",
+      "description": "Use AI agent for autonomous extraction via natural language prompt",
+      "usage": "python firecrawl.py agent '<prompt>' [--schema <schema_file>] [--model spark-1-mini|spark-1-pro]",
+      "examples": [
+        "python firecrawl.py agent 'Find the founders of this company and their backgrounds'",
+        "python firecrawl.py agent 'List all products and their prices' --schema schemas/product.py"
+      ]
+    },
+    {
+      "name": "search",
+      "description": "Search the web and extract full content from results",
+      "usage": "python firecrawl.py search '<query>' [--limit N] [--output <file>]",
+      "examples": [
+        "python firecrawl.py search 'best web scraping tools 2024' --limit 10",
+        "python firecrawl.py search 'mechanical keyboard reviews' --output results.json"
+      ]
+    },
+    {
+      "name": "map",
+      "description": "Discover all URLs on a domain with optional search filtering",
+      "usage": "python firecrawl.py map <url> [--search <term>]",
+      "examples": [
+        "python firecrawl.py map https://example.com",
+        "python firecrawl.py map https://docs.example.com --search api"
+      ]
+    },
+    {
+      "name": "status",
+      "description": "Check Firecrawl installation status and API key configuration",
+      "usage": "python firecrawl.py status",
+      "examples": [
+        "python firecrawl.py status"
+      ]
+    },
+    {
+      "name": "help",
+      "description": "Show help information with all commands and examples",
+      "usage": "python firecrawl.py help",
+      "examples": [
+        "python firecrawl.py help"
+      ]
+    }
+  ],
+  "requirements": [
+    "Python 3.10+",
+    "firecrawl-py>=1.0.0",
+    "pydantic>=2.0",
+    "pytest>=7.0"
+  ],
+  "optional_dependencies": [
+    "prometheus-client>=0.17 (monitoring)",
+    "rich>=13.0 (CLI formatting)"
+  ],
+  "tags": [
+    "web-scraping",
+    "ai-extraction",
+    "natural-language",
+    "llm-ready",
+    "mcp",
+    "agent",
+    "zero-config",
+    "markdown"
+  ],
+  "category": "ai-core",
+  "related_agents": [
+    "firecrawl-engineer",
+    "full-stack-ai-engineer",
+    "data-engineer"
+  ],
+  "related_skills": [
+    "firecrawl-workflow"
+  ],
+  "related_commands": [
+    "firecrawl",
+    "scrape",
+    "scraping"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "name": "Meta Agents",
+  "description": "High-level orchestration agents that coordinate multiple specialized agents",
+  "agents": [
+    {
+      "name": "@project-architect",
+      "mode": "primary",
+      "description": "Full system design and coordination of multiple specialized agents",
+      "purpose": "Greenfield systems, architecture reviews, migration planning",
+      "skills": ["orchestrator-tech-lead", "product-engineer", "dev-ops-platform-engineer"],
+      "capabilities": [
+        "System architecture design",
+        "Technology selection",
+        "Agent coordination",
+        "Project planning"
+      ]
+    },
+    {
+      "name": "@debug-specialist",
+      "mode": "primary", 
+      "description": "Root cause analysis and systematic debugging for complex issues",
+      "purpose": "Complex bugs, production incidents, performance issues",
+      "skills": ["software-engineer", "observability-engineer", "sre-reliability-engineer"],
+      "capabilities": [
+        "Root cause analysis",
+        "Log analysis",
+        "Performance debugging",
+        "Incident investigation"
+      ]
+    },
+    {
+      "name": "@refactor-expert",
+      "mode": "primary",
+      "description": "Large-scale refactoring and technical debt reduction",
+      "purpose": "Architecture improvements, migrations, code cleanup",
+      "skills": ["software-engineer", "code-reviewer", "qa-automation-engineer"],
+      "capabilities": [
+        "Large-scale refactoring",
+        "Technical debt reduction",
+        "Pattern standardization",
+        "Migration execution"
+      ]
+    }
+  ],
+  "coordinationPatterns": {
+    "sequential": "Run agents one after another for dependent tasks",
+    "parallel": "Run agents concurrently for independent tasks",
+    "hierarchical": "Primary agent delegates to specialized agents"
+  }
+}

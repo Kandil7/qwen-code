@@ -1,0 +1,176 @@
+{
+  "_comment": "Mock Parity Test Scenarios for Qwen Code AI Engineering Setup",
+  "_based_on": "ultraworkers/claw-code mock_parity_scenarios.json",
+  "_purpose": "Deterministic testing of AI agent behavior against expected outputs",
+  "_version": "1.0.0",
+
+  "scenarios": [
+    {
+      "id": "read_file_roundtrip",
+      "description": "Agent can read a file and return its contents",
+      "type": "tool_execution",
+      "tool": "read_file",
+      "input": {
+        "file_path": "C:\\Users\\amazon\\.qwen\\memory-global.md"
+      },
+      "expected": {
+        "status": "success",
+        "output_contains": ["Global Memory"],
+        "max_time_ms": 1000
+      },
+      "severity": "critical"
+    },
+    {
+      "id": "write_file_roundtrip",
+      "description": "Agent can write a file and the content matches",
+      "type": "tool_execution",
+      "tool": "write_file",
+      "input": {
+        "file_path": "C:\\Users\\amazon\\.qwen\\tests\\mock-parity\\test-output.txt",
+        "content": "Hello from parity test!"
+      },
+      "expected": {
+        "status": "success",
+        "file_exists": true,
+        "file_content": "Hello from parity test!"
+      },
+      "severity": "critical",
+      "cleanup": true
+    },
+    {
+      "id": "grep_search",
+      "description": "Agent can search for patterns in files",
+      "type": "tool_execution",
+      "tool": "grep_search",
+      "input": {
+        "pattern": "Total Agents",
+        "path": "C:\\Users\\amazon\\.qwen"
+      },
+      "expected": {
+        "status": "success",
+        "matches_count_gte": 1,
+        "matches_contain": ["53"]
+      },
+      "severity": "critical"
+    },
+    {
+      "id": "glob_search",
+      "description": "Agent can find files matching patterns",
+      "type": "tool_execution",
+      "tool": "glob",
+      "input": {
+        "pattern": "*.md",
+        "path": "C:\\Users\\amazon\\.qwen\\commands"
+      },
+      "expected": {
+        "status": "success",
+        "files_count_gte": 3,
+        "files_include": ["scrape.md", "firecrawl.md", "scraping.md"]
+      },
+      "severity": "critical"
+    },
+    {
+      "id": "agent_invocation",
+      "description": "Agent files exist and are valid markdown",
+      "type": "agent_validation",
+      "agent": "web-scraper-engineer",
+      "expected": {
+        "status": "success",
+        "file_exists": true,
+        "has_frontmatter": true,
+        "has_boundaries": true,
+        "has_success_metrics": true
+      },
+      "severity": "critical"
+    },
+    {
+      "id": "policy_enforcement_blocked",
+      "description": "Policy enforcer blocks access to blocked paths",
+      "type": "policy_test",
+      "test_type": "blocked_path",
+      "input": {
+        "tool": "write_file",
+        "file_path": "C:\\Windows\\system32\\test.txt"
+      },
+      "expected": {
+        "status": "blocked",
+        "reason_contains": "Blocked path"
+      },
+      "severity": "critical"
+    },
+    {
+      "id": "policy_enforcement_allowed",
+      "description": "Policy enforcer allows access to writable directories",
+      "type": "policy_test",
+      "test_type": "allowed_path",
+      "input": {
+        "tool": "write_file",
+        "file_path": "C:\\Users\\amazon\\.qwen\\tests\\mock-parity\\policy-test.txt"
+      },
+      "expected": {
+        "status": "allowed"
+      },
+      "severity": "critical",
+      "cleanup": true
+    },
+    {
+      "id": "security_check_blocks_dangerous",
+      "description": "Security check blocks rm -rf and similar destructive commands",
+      "type": "security_test",
+      "test_type": "blocked_command",
+      "input": {
+        "command": "rm -rf /important/directory"
+      },
+      "expected": {
+        "status": "blocked",
+        "reason_contains": "Destructive"
+      },
+      "severity": "critical"
+    },
+    {
+      "id": "skill_file_valid",
+      "description": "Key skill files exist and are non-empty",
+      "type": "file_validation",
+      "files": [
+        "C:\\Users\\amazon\\.qwen\\skills\\scrapling.py",
+        "C:\\Users\\amazon\\.qwen\\skills\\firecrawl.py",
+        "C:\\Users\\amazon\\.qwen\\skills\\scrapy.py",
+        "C:\\Users\\amazon\\.qwen\\skills\\harness-engineering.md"
+      ],
+      "expected": {
+        "all_exist": true,
+        "all_non_empty": true,
+        "min_lines": 20
+      },
+      "severity": "critical"
+    },
+    {
+      "id": "hook_scripts_executable",
+      "description": "All hook scripts exist and are valid JavaScript",
+      "type": "hook_validation",
+      "hooks": [
+        "security-check.js",
+        "auto-lint.js",
+        "error-analyzer.js",
+        "pre-compact-memory.js",
+        "session-summary.js",
+        "agent-log.js",
+        "code-health-check.js",
+        "policy-enforcer.js"
+      ],
+      "expected": {
+        "all_exist": true,
+        "all_valid_js": true
+      },
+      "severity": "critical"
+    }
+  ],
+
+  "execution_config": {
+    "timeout_per_scenario_ms": 10000,
+    "stop_on_first_failure": false,
+    "parallel_execution": false,
+    "output_format": "json",
+    "cleanup_after": true
+  }
+}

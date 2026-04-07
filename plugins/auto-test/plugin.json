@@ -1,0 +1,31 @@
+{
+  "name": "auto-test",
+  "version": "1.0.0",
+  "description": "Automatically runs tests after every code generation turn. If tests fail, provides feedback to the agent for self-correction.",
+  "author": "Qwen Code AI Engineering",
+  "enabled": true,
+
+  "lifecycle_hooks": {
+    "afterTurn": [
+      "After generating code, run the test suite. If tests fail, report failures with specific file/line info to enable self-correction. If tests pass, report coverage stats."
+    ],
+    "onResume": [
+      "Re-run tests to verify the codebase is still in a valid state after session resume"
+    ]
+  },
+
+  "triggers": {
+    "onFileChange": ["*.py", "*.js", "*.ts", "*.tsx", "*.jsx"],
+    "onAgentType": ["software-engineer", "full-stack-ai-engineer", "api-engineer", "frontend-engineer"]
+  },
+
+  "scripts": {
+    "afterTurn": "node .qwen/scripts/run-tests-after-turn.js"
+  },
+
+  "test_commands": {
+    "python": "pytest tests/ -v --tb=short 2>&1",
+    "node": "npm test 2>&1",
+    "fallback": "echo 'No test command configured for this project'"
+  }
+}

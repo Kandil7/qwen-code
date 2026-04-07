@@ -1,0 +1,65 @@
+{
+  "_comment": "Plugin Template - Copy this to create new plugins",
+  "_usage": "Duplicate this file to plugins/<your-plugin>/plugin.json and customize",
+
+  "name": "my-plugin",
+  "version": "1.0.0",
+  "description": "Describe what your plugin does",
+  "author": "Your name",
+  "enabled": true,
+
+  "lifecycle_hooks": {
+    "_description": "Strings injected at lifecycle points",
+    "beforePrompt": [
+      "Additional context or guidance to inject before the agent processes the user prompt"
+    ],
+    "afterTurn": [
+      "Actions to perform after each agent turn (e.g., run tests, commit changes)"
+    ],
+    "onResume": [
+      "State to reapply when resuming a session"
+    ],
+    "beforePersist": [
+      "Custom state to save before session persistence"
+    ],
+    "beforeDelegate": [
+      "Guidance to inject before delegating to a subagent"
+    ],
+    "afterDelegate": [
+      "Processing to apply after a subagent completes"
+    ]
+  },
+
+  "toolAliases": {
+    "_description": "Map custom tool names to base tools",
+    "my_custom_tool": "bash"
+  },
+
+  "virtualTools": {
+    "_description": "Define mock tools with response templates",
+    "my_virtual_tool": {
+      "description": "What this tool does",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "param1": { "type": "string", "description": "Description of param1" }
+        },
+        "required": ["param1"]
+      },
+      "responseTemplate": "Result: {param1}"
+    }
+  },
+
+  "triggers": {
+    "_description": "When should this plugin activate",
+    "onFileChange": ["*.py", "*.js", "*.ts"],
+    "onCommand": ["/test", "/commit"],
+    "onAgentType": ["software-engineer", "web-scraper-engineer"]
+  },
+
+  "scripts": {
+    "_description": "Helper scripts to run at lifecycle points",
+    "afterTurn": "node scripts/run-tests.js",
+    "beforePersist": "node scripts/save-state.js"
+  }
+}

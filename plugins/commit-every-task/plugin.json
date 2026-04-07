@@ -1,0 +1,32 @@
+{
+  "name": "commit-every-task",
+  "version": "1.0.0",
+  "description": "Automatically creates a git commit after each completed task. Uses conventional commit format based on the task description. Creates granular save points for agent work.",
+  "author": "Qwen Code AI Engineering",
+  "enabled": true,
+
+  "lifecycle_hooks": {
+    "afterTurn": [
+      "After completing a task, check git status. If there are changes, create a commit with a descriptive message based on the task. Use conventional commit format: 'feat:', 'fix:', 'refactor:', 'test:', 'docs:', 'chore:'. Never commit if there are no changes. Never force push."
+    ]
+  },
+
+  "triggers": {
+    "onFileChange": ["*"],
+    "onCommand": ["/implement"]
+  },
+
+  "commit_rules": {
+    "max_files_per_commit": 10,
+    "always_run_lint_before_commit": true,
+    "never_commit": [
+      "*.log",
+      "*.tmp",
+      "__pycache__/",
+      "node_modules/",
+      ".qwen/audit-trail.json",
+      ".qwen/session-summaries/"
+    ],
+    "conventional_types": ["feat", "fix", "docs", "style", "refactor", "test", "chore", "perf"]
+  }
+}

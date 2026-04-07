@@ -1,0 +1,82 @@
+{
+  "name": "code-review-graph",
+  "version": "1.0.0",
+  "description": "Code review and blast-radius analysis using knowledge graphs",
+  "author": "Qwen Code Skills",
+  "license": "MIT",
+  "entry_point": "code-review-graph.py",
+  "commands": [
+    {
+      "name": "build",
+      "description": "Build or update the code review graph for the current project",
+      "usage": "/code-review-graph build [--force]",
+      "examples": [
+        "/code-review-graph build",
+        "/code-review-graph build --force"
+      ]
+    },
+    {
+      "name": "review",
+      "description": "Review changes since last commit with blast-radius analysis",
+      "usage": "/code-review-graph review",
+      "examples": [
+        "/code-review-graph review"
+      ]
+    },
+    {
+      "name": "blast",
+      "description": "Analyze the blast radius (impact) of changing a file or function",
+      "usage": "/code-review-graph blast <file_or_function>",
+      "examples": [
+        "/code-review-graph blast src/auth.py",
+        "/code-review-graph blast UserService.authenticate"
+      ]
+    },
+    {
+      "name": "search",
+      "description": "Semantic search across the codebase using the knowledge graph",
+      "usage": "/code-review-graph search <query>",
+      "examples": [
+        "/code-review-graph search authentication middleware",
+        "/code-review-graph search database connection pooling"
+      ]
+    },
+    {
+      "name": "status",
+      "description": "Show statistics about the code graph (nodes, edges, languages)",
+      "usage": "/code-review-graph status",
+      "examples": [
+        "/code-review-graph status"
+      ]
+    },
+    {
+      "name": "visualize",
+      "description": "Generate an interactive HTML visualization of the code graph",
+      "usage": "/code-review-graph visualize",
+      "examples": [
+        "/code-review-graph visualize"
+      ]
+    },
+    {
+      "name": "help",
+      "description": "Show help information for code-review-graph commands",
+      "usage": "/code-review-graph help",
+      "examples": [
+        "/code-review-graph help"
+      ]
+    }
+  ],
+  "requirements": [
+    "Python 3.10+",
+    "code-review-graph package (pip install code-review-graph)"
+  ],
+  "tags": [
+    "code-review",
+    "static-analysis",
+    "knowledge-graph",
+    "blast-radius",
+    "impact-analysis",
+    "semantic-search"
+  ],
+  "category": "development-tools"
+}

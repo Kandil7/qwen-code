@@ -1,0 +1,97 @@
+{
+  "name": "scrapy",
+  "version": "1.0.0",
+  "description": "Production-scale web crawling skill using Scrapy framework with async pipelines, middleware, and distributed crawling",
+  "entry_point": "scrapy.py",
+  "commands": [
+    {
+      "name": "init",
+      "description": "Create new Scrapy project with spider templates, middleware, pipelines, and Docker files",
+      "usage": "python scrapy.py init <project_name>",
+      "examples": [
+        "python scrapy.py init product-crawler",
+        "python scrapy.py init news-aggregator"
+      ]
+    },
+    {
+      "name": "spider",
+      "description": "Generate a new spider from template",
+      "usage": "python scrapy.py spider <name> --type basic|crawl|redis [--url <start_url>]",
+      "examples": [
+        "python scrapy.py spider products --type basic --url https://shop.example.com",
+        "python scrapy.py spider docs --type crawl --url https://docs.example.com"
+      ]
+    },
+    {
+      "name": "run",
+      "description": "Run a Scrapy spider with optional output file",
+      "usage": "python scrapy.py run <spider_name> [--output <file>] [--settings <file>]",
+      "examples": [
+        "python scrapy.py run products --output data/products.json",
+        "python scrapy.py run docs --settings config/settings.py"
+      ]
+    },
+    {
+      "name": "test",
+      "description": "Run spider tests with HTML fixtures",
+      "usage": "python scrapy.py test [--fixtures]",
+      "examples": [
+        "python scrapy.py test",
+        "python scrapy.py test --fixtures"
+      ]
+    },
+    {
+      "name": "status",
+      "description": "Check Scrapy installation status and project health",
+      "usage": "python scrapy.py status",
+      "examples": [
+        "python scrapy.py status"
+      ]
+    },
+    {
+      "name": "help",
+      "description": "Show help information with all commands and examples",
+      "usage": "python scrapy.py help",
+      "examples": [
+        "python scrapy.py help"
+      ]
+    }
+  ],
+  "requirements": [
+    "Python 3.10+",
+    "scrapy>=2.11",
+    "pydantic>=2.0",
+    "pytest>=7.0"
+  ],
+  "optional_dependencies": [
+    "scrapy-playwright>=0.0.13 (JS rendering)",
+    "scrapy-redis>=0.7 (distributed crawling)",
+    "scrapyd>=1.3 (deployment)",
+    "prometheus-client>=0.17 (monitoring)",
+    "rich>=13.0 (CLI formatting)"
+  ],
+  "tags": [
+    "web-scraping",
+    "crawling",
+    "async",
+    "production",
+    "pipelines",
+    "middleware",
+    "distributed",
+    "twisted"
+  ],
+  "category": "data-engineering",
+  "related_agents": [
+    "scrapy-engineer",
+    "data-engineer",
+    "dev-ops-platform-engineer"
+  ],
+  "related_skills": [
+    "scrapy-workflow"
+  ],
+  "related_commands": [
+    "scraping",
+    "scrape",
+    "firecrawl"
+  ]
+}

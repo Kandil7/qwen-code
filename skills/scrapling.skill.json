@@ -1,0 +1,96 @@
+{
+  "name": "scrapling",
+  "version": "1.0.0",
+  "description": "Web scraping skill using Scrapling framework with adaptive parsing, anti-bot bypass, and crawling capabilities",
+  "entry_point": "scrapling.py",
+  "commands": [
+    {
+      "name": "init",
+      "description": "Create a new scraper project with full scaffold including scrapers, models, tests, config, and Docker files",
+      "usage": "python scrapling.py init <project_name>",
+      "examples": [
+        "python scrapling.py init product-scraper",
+        "python scrapling.py init job-board-scraper"
+      ]
+    },
+    {
+      "name": "fetch",
+      "description": "Fetch and extract data from a URL with optional browser automation or anti-bot bypass",
+      "usage": "python scrapling.py fetch <url> [--dynamic] [--stealth] [--output <file>]",
+      "examples": [
+        "python scrapling.py fetch https://example.com",
+        "python scrapling.py fetch https://protected-site.com --stealth",
+        "python scrapling.py fetch https://example.com --dynamic --output page.json"
+      ]
+    },
+    {
+      "name": "crawl",
+      "description": "Crawl multiple pages starting from a URL with configurable depth and delays",
+      "usage": "python scrapling.py crawl <url> [--pages N] [--delay MS]",
+      "examples": [
+        "python scrapling.py crawl https://docs.example.com --pages 100",
+        "python scrapling.py crawl https://blog.example.com --pages 50 --delay 3.0"
+      ]
+    },
+    {
+      "name": "test",
+      "description": "Run scraper tests with HTML fixtures and mock responses",
+      "usage": "python scrapling.py test [--fixtures]",
+      "examples": [
+        "python scrapling.py test",
+        "python scrapling.py test --fixtures"
+      ]
+    },
+    {
+      "name": "status",
+      "description": "Check Scrapling installation status and dependencies",
+      "usage": "python scrapling.py status",
+      "examples": [
+        "python scrapling.py status"
+      ]
+    },
+    {
+      "name": "help",
+      "description": "Show help information with all available commands and examples",
+      "usage": "python scrapling.py help",
+      "examples": [
+        "python scrapling.py help"
+      ]
+    }
+  ],
+  "requirements": [
+    "Python 3.10+",
+    "scrapling[all]>=0.1.0",
+    "pydantic>=2.0",
+    "pytest>=7.0",
+    "pyyaml>=6.0"
+  ],
+  "optional_dependencies": [
+    "prometheus-client>=0.17 (monitoring)",
+    "rich>=13.0 (CLI formatting)",
+    "tqdm>=4.66 (progress bars)"
+  ],
+  "tags": [
+    "web-scraping",
+    "data-extraction",
+    "crawling",
+    "anti-bot",
+    "cloudflare-bypass",
+    "adaptive-parsing",
+    "playwright",
+    "scraper"
+  ],
+  "category": "data-engineering",
+  "related_agents": [
+    "web-scraper-engineer",
+    "data-engineer",
+    "api-engineer",
+    "observability-engineer"
+  ],
+  "related_skills": [
+    "scrapling-workflow"
+  ],
+  "related_commands": [
+    "scrape"
+  ]
+}

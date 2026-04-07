@@ -1,0 +1,26 @@
+{
+  "name": "doc-sync",
+  "version": "1.0.0",
+  "description": "After code changes, identifies documentation that may be outdated (README.md, AGENTS.md, API docs, etc.) and flags them for review or auto-updates.",
+  "author": "Qwen Code AI Engineering",
+  "enabled": true,
+
+  "lifecycle_hooks": {
+    "afterTurn": [
+      "After modifying source code files, check if related documentation files reference the modified code patterns. If a README, AGENTS.md, or API doc mentions the old function names, parameters, or behavior, flag it with a 'doc drift' warning listing the specific sections that need updating."
+    ]
+  },
+
+  "triggers": {
+    "onFileChange": ["*.py", "*.js", "*.ts", "api/*.py"],
+    "onAgentType": ["software-engineer", "api-engineer"]
+  },
+
+  "monitored_docs": [
+    "README.md",
+    "AGENTS.md",
+    "docs/*.md",
+    "*.qwen/TOOLS.md",
+    "*.qwen/DEVX.md"
+  ]
+}
